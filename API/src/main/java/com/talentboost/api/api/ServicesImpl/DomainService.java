@@ -75,17 +75,13 @@ public class DomainService implements DomainServiceInterface {
         int minLevenStheinDistance = 123123123; // just need a very big number
         int currentDistance;
         Meme tmp = null;
-        System.out.println(filter + ":filter");
-        System.out.println(memes.length);
         for (Meme meme : memes) {
             currentDistance = levenStheinAlgorithm(meme.getTitle(), filter);
             if (currentDistance < minLevenStheinDistance) {
-                System.out.println(meme.getTitle() + currentDistance);
                 minLevenStheinDistance = currentDistance;
                 tmp = meme;
             }
         }
-        System.out.println(tmp.getTitle());
 
      return tmp;
     }
@@ -102,18 +98,14 @@ public class DomainService implements DomainServiceInterface {
         }
         for(int i = 1; i <= title.length();i++){
             for(int j = 1; j <= filter.length();j++){
-                dp[i][j] = min(dp[i - 1][j - 1] + costOfSubstitution(title.charAt(i - 1), filter.charAt(j - 1)),dp[i - 1][j] + 1,dp[i][j - 1] + 1);
+                dp[i][j] = Math.min(dp[i - 1][j - 1] + areEqual(title.charAt(i - 1), filter.charAt(j - 1)),Math.min(dp[i - 1][j] + 1,dp[i][j - 1] + 1));
             }
         }
 
         return dp[title.length()][filter.length()];
     }
 
-    private int min(int a, int b, int c) {
-       return  Math.min(a, Math.min(b, c));
-    }
-
-    private int costOfSubstitution(char a, char b) {
+    private int areEqual(char a, char b) {
         if(a == b)return 0;
         return 1;
     }
