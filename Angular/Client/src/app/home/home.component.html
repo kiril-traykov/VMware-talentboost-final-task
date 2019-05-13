@@ -1,0 +1,32 @@
+<div style="text-align:center">
+  <div class = "someDiv2">
+  <input type="text" [(ngModel)]="filterstr" id="search" (input)="filter($event.target.value)" placeholder="Search">
+  <select (change)="setPageContent($event)">
+    <option value="4">4</option>
+    <option value="6">6</option>
+    <option value="8">8</option>
+</select>
+  </div>
+
+
+
+  <div *ngFor="let m of memeService.memes ; let i = index" >
+    <div class="lim" >
+       {{m.title}}{{m.index}}
+       <br>
+      <img [src]=m.url>
+      <br>
+      <button type="button" class="del" (click)="onDelete(m.id)">Delete</button>
+      <button type="button" class="edit" (click)="onEdit(i,m.id)">Edit</button>
+      </div>
+
+</div>
+</div>
+
+
+<div class = "someDiv1">    <hr>
+</div>
+<div class ="someDiv">
+    <button type="button" class="prev" (click)="previous()"[disabled]="currentPage === 1">Previous</button>
+    <button type="button" class="next" (click)="next()"[disabled]="currentPage === totalPages">Next</button>
+</div>

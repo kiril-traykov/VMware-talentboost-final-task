@@ -1,0 +1,12 @@
+<form>
+  <div>Title:  <input type="text" id="input" [(ngModel)]="meme.title"[ngModelOptions]="{standalone: true}"> 
+    <br>
+    <input type="file" (change)='handleImages($event)' >
+  </div> 
+
+
+  <br>
+ <button type="submit" class="confirm"(click) = 'onConfirm()'>Confirm</button>
+</form>
+
+<button type="button" class="confirm"(click) = 'abort()'>Cancel</button>
