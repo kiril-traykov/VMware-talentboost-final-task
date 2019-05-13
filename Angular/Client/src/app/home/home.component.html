@@ -1,11 +1,15 @@
 <div style="text-align:center">
+<div class = "someDiv3">
+    Memes per Page:   <select class ="select" (change)="setPageContent($event)">
+        <option value="4">4</option>
+        <option value="6">6</option>
+        <option value="8">8</option>
+    </select>
+  </div>
   <div class = "someDiv2">
+    
   <input type="text" [(ngModel)]="filterstr" id="search" (input)="filter($event.target.value)" placeholder="Search">
-  <select (change)="setPageContent($event)">
-    <option value="4">4</option>
-    <option value="6">6</option>
-    <option value="8">8</option>
-</select>
+  
   </div>
 
 

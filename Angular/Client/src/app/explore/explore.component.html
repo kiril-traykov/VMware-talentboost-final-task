@@ -1,9 +1,9 @@
-
+<div style="text-align:center">
 <select (change)="onChange($event.target.value)">
   <option hidden disabled selected value>  </option>
   <option *ngFor="let dom of domainService.domains;let i = index" >{{dom.name}}</option>
 </select>
-
+</div>
 
 <div *ngFor="let m of domainService.memes">
   <div class="lim" >
