@@ -5,10 +5,19 @@
 </select>
 </div>
 
-<div *ngFor="let m of domainService.memes">
-  <div class="lim" >
+<form>
+    <div>
+      <input type="text" class="input" [(ngModel)]="filter"[ngModelOptions]="{standalone: true}"> 
+    </div> 
+    <br>
+    
+   <button type="submit" class="Confirm"(click) = 'advancedFilter(filter)'>Search</button>
+</form>
+
+<div style="text-align:center" *ngFor="let m of domainService.memes">
+  <div class="imageDisplayingDiv" >
   {{m.title}}
      <br>
     <img [src]=m.url>
     <br>
-    </div>
+</div>

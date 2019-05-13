@@ -13,6 +13,15 @@ export class ExploreComponent implements OnInit {
     this.domainService.getDomains();
   }
 
+  advancedFilter(filter : String){
+    if(filter === ""){
+      
+    }
+  
+    this.domainService.advancedFilter(filter);
+
+  }
+
   onChange(domainName){
     this.domainService.getMemes(domainName);
   }

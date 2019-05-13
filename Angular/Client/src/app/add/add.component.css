@@ -1,4 +1,4 @@
-.someDiv2{
+.formWrappingDiv{
     float:central;
     border: 1px solid lawngreen;
     clear:left;
@@ -9,7 +9,7 @@
     text-align: center;
   }
 
-  .input{
+.input{
     float:center;
     clear: both;
     border-radius: 4px;
@@ -18,10 +18,8 @@
     width: 320px;
   }
 
-  .Confirm {
+.Confirm {
 	background-color:#44c767;
-	-moz-border-radius:28px;
-	-webkit-border-radius:28px;
 	border-radius:28px;
 	border:1px solid #18ab29;
 	display:inline-block;
@@ -33,6 +31,7 @@
 	text-decoration:none;
 	text-shadow:0px 1px 0px #2f6627;
 }
+
 .Confirm:hover {
 	background-color:#5cbf2a;
 }
@@ -42,20 +41,10 @@
 }
 
 .Cancel {
-    float:right;
-	-moz-box-shadow: 3px 4px 0px 0px #8a2a21;
-	-webkit-box-shadow: 3px 4px 0px 0px #8a2a21;
+  float:right;
 	box-shadow: 3px 4px 0px 0px #8a2a21;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #c62d1f), color-stop(1, #f24437));
-	background:-moz-linear-gradient(top, #c62d1f 5%, #f24437 100%);
-	background:-webkit-linear-gradient(top, #c62d1f 5%, #f24437 100%);
-	background:-o-linear-gradient(top, #c62d1f 5%, #f24437 100%);
-	background:-ms-linear-gradient(top, #c62d1f 5%, #f24437 100%);
 	background:linear-gradient(to bottom, #c62d1f 5%, #f24437 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c62d1f', endColorstr='#f24437',GradientType=0);
 	background-color:#c62d1f;
-	-moz-border-radius:18px;
-	-webkit-border-radius:18px;
 	border-radius:18px;
 	border:1px solid #d02718;
 	display:inline-block;
@@ -63,18 +52,13 @@
 	color:#ffffff;
 	font-family:Arial;
 	font-size:14px;
-	padding:2px 4px;
+  padding:2px 4px;
+  margin: 3px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #810e05;
 }
 .Cancel:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f24437), color-stop(1, #c62d1f));
-	background:-moz-linear-gradient(top, #f24437 5%, #c62d1f 100%);
-	background:-webkit-linear-gradient(top, #f24437 5%, #c62d1f 100%);
-	background:-o-linear-gradient(top, #f24437 5%, #c62d1f 100%);
-	background:-ms-linear-gradient(top, #f24437 5%, #c62d1f 100%);
 	background:linear-gradient(to bottom, #f24437 5%, #c62d1f 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24437', endColorstr='#c62d1f',GradientType=0);
 	background-color:#f24437;
 }
 .Cancel:active {

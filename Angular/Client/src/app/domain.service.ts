@@ -18,6 +18,7 @@ address : String = "http://localhost:8080";
     }
 
     extractDomains(data){
+      this.domains = [];
       for(let domain of data){
         this.domains.push(domain);
       }
@@ -30,10 +31,19 @@ address : String = "http://localhost:8080";
   }
 
   extractMemes(data){
+    this.memes = [];
     for(let meme of data){
       this.memes.push(meme);
     }
   }
 
+  advancedFilter(filter : String){
+    this.http.get(this.address + '/filter/' + filter).subscribe(
+      data => this.extractMemes(data));
+    }
 
-}
+
+  }
+
+
+

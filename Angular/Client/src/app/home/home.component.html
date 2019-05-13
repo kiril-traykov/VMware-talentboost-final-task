@@ -1,21 +1,21 @@
 <div style="text-align:center">
-<div class = "someDiv3">
+    <div class = "paginationOptionWrappingDiv">
     Memes per Page:   <select class ="select" (change)="setPageContent($event)">
         <option value="4">4</option>
         <option value="6">6</option>
         <option value="8">8</option>
     </select>
-  </div>
-  <div class = "someDiv2">
+
+    </div>
+
+    <div class = "filterBoxWrappingDiv">
     
   <input type="text" [(ngModel)]="filterstr" id="search" (input)="filter($event.target.value)" placeholder="Search">
   
-  </div>
+    </div>
 
-
-
-  <div *ngFor="let m of memeService.memes ; let i = index" >
-    <div class="lim" >
+    <div *ngFor="let m of memeService.memes ; let i = index" >
+      <div class="imageDisplayingDiv" >
        {{m.title}}{{m.index}}
        <br>
       <img [src]=m.url>
@@ -24,13 +24,14 @@
       <button type="button" class="edit" (click)="onEdit(i,m.id)">Edit</button>
       </div>
 
-</div>
+    </div>
+
 </div>
 
-
-<div class = "someDiv1">    <hr>
+<div class = "someDiv">   
+     <hr>
 </div>
-<div class ="someDiv">
+<div class ="pageNavButtonsWrappingDiv">
     <button type="button" class="prev" (click)="previous()"[disabled]="currentPage === 1">Previous</button>
     <button type="button" class="next" (click)="next()"[disabled]="currentPage === totalPages">Next</button>
 </div>
