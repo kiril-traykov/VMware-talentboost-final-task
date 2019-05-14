@@ -24,7 +24,9 @@ public class MemeService implements MemeServiceInterface {
     private int totalPagesFilter;
     @Override
     public List<Meme> getAllMemes() {
-        return (List<Meme>) repository.findAll();
+        List<Meme> allMemes = (List<Meme>) repository.findAll();
+        Collections.sort(allMemes,new SortbyId());
+        return allMemes;
     }
 
     @Override
@@ -146,8 +148,6 @@ public class MemeService implements MemeServiceInterface {
     private void removeFilter(){
         this.filter = "";
     }
-
-
 }
 
 class SortbyId implements Comparator<Meme>
