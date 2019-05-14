@@ -32,8 +32,13 @@ public class DomainService implements DomainServiceInterface {
         String serverName = "Normie Memes";
         String myAddress = "http://192.168.1.5:8080";
         Domain myDomain = new Domain(serverName, myAddress);
-        index = rest.postForObject
-                (url + "/register?name="+ serverName + "&address=" + myAddress,myDomain,Integer.class);
+        try {
+            index = rest.postForObject
+                    (url + "/register?name=" + serverName + "&address=" + myAddress, myDomain, Integer.class);
+        }catch (Exception e){
+            System.out.println("Could not Register");
+            e.printStackTrace();
+        }
     }
     @Override
 

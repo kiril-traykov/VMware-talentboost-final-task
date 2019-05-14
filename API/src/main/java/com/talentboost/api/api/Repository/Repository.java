@@ -1,7 +1,7 @@
 package com.talentboost.api.api.Repository;
 import com.talentboost.api.api.Models.Meme;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface Repository extends CrudRepository <Meme,Integer> {
+public interface Repository extends JpaRepository <Meme,Integer> {
 
 }

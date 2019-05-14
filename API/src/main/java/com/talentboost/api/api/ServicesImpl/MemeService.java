@@ -24,8 +24,9 @@ public class MemeService implements MemeServiceInterface {
     private int totalPagesFilter;
     @Override
     public List<Meme> getAllMemes() {
-        List<Meme> allMemes = (List<Meme>) repository.findAll();
-        Collections.sort(allMemes,new SortbyId());
+
+        List<Meme> allMemes = repository.findAll();
+        allMemes.sort(new SortbyId());
         return allMemes;
     }
 
@@ -38,8 +39,8 @@ public class MemeService implements MemeServiceInterface {
     }
 
     private List<Meme> getPagedMemesFilter(int page) {
-        List<Meme> allMemes = (List<Meme>) repository.findAll();
-        Collections.sort(allMemes, new SortbyId());
+        List<Meme> allMemes = repository.findAll();
+        allMemes.sort(new SortbyId());
         List<Meme> selectedMemes = new ArrayList<>();
         List<Meme> allFilteredMemes = new ArrayList<>();
         for(int i = 0; i < allMemes.size();i++){
@@ -59,7 +60,7 @@ public class MemeService implements MemeServiceInterface {
 
     private List<Meme> getPagedMemesNoFilter(int page) {
         List<Meme> allMemes = (List<Meme>) repository.findAll();
-        Collections.sort(allMemes, new SortbyId());
+        allMemes.sort(new SortbyId());
         List<Meme> selectedMemes = new ArrayList<>();
         for(int i = (page - 1) * contentPerPage; i < page * contentPerPage && i < allMemes.size();i++) {
            selectedMemes.add(allMemes.get(i));
@@ -94,6 +95,7 @@ public class MemeService implements MemeServiceInterface {
             Files.write(path, arr);
         } catch (IOException e) {
             System.out.println("Upload failed");
+            e.printStackTrace();
         }
         String url = serverAddress + "/images/" + title + ".png";
         repository.save(new Meme(title, url));
@@ -107,7 +109,7 @@ public class MemeService implements MemeServiceInterface {
     }
 
     @Override
-    public void updateMeme(MultipartFile file, int id) throws IOException {
+    public void updateMeme(MultipartFile file, int id) throws IOException, NoSuchFieldException {
         String newTitle = file.getOriginalFilename();
         Path path = Paths.get(imagesPath + newTitle + ".png");
 
@@ -116,24 +118,33 @@ public class MemeService implements MemeServiceInterface {
             Files.write(path, arr);
         } catch (IOException e) {
             System.out.println("Image uploading failed");
+            e.printStackTrace();
         }
 
         String url = serverAddress + "/images/" + newTitle + ".png";
-        Optional<Meme> tmp = repository.findById(id);
-        Meme someMeme = tmp.get();
-        someMeme.setTitle(newTitle);
-        someMeme.setUrl(url);
-        repository.save(someMeme);
+        Meme meme = repository.findById(id).orElse(null);
+        if(meme != null){
+            meme.setTitle(newTitle);
+        meme.setUrl(url);
+        repository.save(meme);
         removeFilter();
+        }
+        else{
+            throw new NoSuchFieldException();
+        }
     }
 
     @Override
-    public void updateMemeTitle(String newTitle, int id) {
-        Optional<Meme> tmp = repository.findById(id);
-        Meme someMeme = tmp.get();
-        someMeme.setTitle(newTitle);
-        repository.save(someMeme);
+    public void updateMemeTitle(String newTitle, int id) throws NoSuchFieldException {
+        Meme meme = repository.findById(id).orElse(null);
+        if(meme != null){
+            meme.setTitle(newTitle);
+        repository.save(meme);
         removeFilter();
+        }
+        else{
+            throw new NoSuchFieldException();
+        }
     }
 
     @Override

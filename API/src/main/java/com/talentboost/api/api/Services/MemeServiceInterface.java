@@ -19,9 +19,9 @@ public interface MemeServiceInterface {
 
     void deleteMeme(int index);
 
-    void updateMeme(MultipartFile file, int id) throws IOException;
+    void updateMeme(MultipartFile file, int id) throws IOException, NoSuchFieldException;
 
-    void updateMemeTitle(String newTitle, int id);
+    void updateMemeTitle(String newTitle, int id) throws NoSuchFieldException;
 
     void setFilter(String filter);
 }
