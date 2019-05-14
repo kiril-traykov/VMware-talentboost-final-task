@@ -10,6 +10,15 @@ div{
     margin:5px;
 }
 
+#homeComing{
+ 	padding:4px 25px;
+
+}
+#explore{
+	padding:4px 20px;
+
+}
+
 .NavButton {
 	
 	box-shadow:inset 0px 0px 0px 2px #9fb4f2;

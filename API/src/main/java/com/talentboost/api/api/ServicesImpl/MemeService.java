@@ -18,7 +18,7 @@ public class MemeService implements MemeServiceInterface {
     @Autowired
     Repository repository;
     private String imagesPath = "C:\\MemeWorld\\Images\\";
-    private String serverAdress = "http://192.168.1.5:8080";
+    private String serverAddress = "http://192.168.1.5:8080";
     private String filter = "";
     private int contentPerPage;
     private int totalPagesFilter;
@@ -95,7 +95,7 @@ public class MemeService implements MemeServiceInterface {
         } catch (IOException e) {
             System.out.println("Upload failed");
         }
-        String url = serverAdress + "/images/" + title + ".png";
+        String url = serverAddress + "/images/" + title + ".png";
         repository.save(new Meme(title, url));
         removeFilter();
     }
@@ -118,7 +118,7 @@ public class MemeService implements MemeServiceInterface {
             System.out.println("Image uploading failed");
         }
 
-        String url = serverAdress + "/images/" + newTitle + ".png";
+        String url = serverAddress + "/images/" + newTitle + ".png";
         Optional<Meme> tmp = repository.findById(id);
         Meme someMeme = tmp.get();
         someMeme.setTitle(newTitle);

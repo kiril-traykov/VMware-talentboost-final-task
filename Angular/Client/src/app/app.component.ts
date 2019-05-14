@@ -14,8 +14,8 @@ export class AppComponent {
   home(){
     this.router.navigate(["/Home"])
   }
- 
-  new(){
+
+  newMeme(){
     this.router.navigate(['/Add']);
   }
   Explore(){
