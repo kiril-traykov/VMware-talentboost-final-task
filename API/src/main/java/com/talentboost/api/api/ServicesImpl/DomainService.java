@@ -16,13 +16,11 @@ import java.util.List;
 @Service
 public class DomainService implements DomainServiceInterface {
 
-    String url = "https://meme-it-platform-service-api.herokuapp.com/domain";
+    private String url = "https://meme-it-platform-service-api.herokuapp.com/domain";
     private RestTemplate rest;
-    private String serverName = "Normie Memes";
-    private String myAddress = "http://192.168.1.5:8080";
-    Integer index;
-    Domain[] domains;
-    Meme[] memes;
+    private Integer index;
+    private Domain[] domains;
+    private Meme[] memes;
 
     public DomainService() {
         rest = new RestTemplate();
@@ -31,7 +29,9 @@ public class DomainService implements DomainServiceInterface {
     @Override
     @PostConstruct
     public void register(){
-        Domain myDomain = new Domain(serverName,myAddress);
+        String serverName = "Normie Memes";
+        String myAddress = "http://192.168.1.5:8080";
+        Domain myDomain = new Domain(serverName, myAddress);
         index = rest.postForObject
                 (url + "/register?name="+ serverName + "&address=" + myAddress,myDomain,Integer.class);
     }

@@ -5,14 +5,17 @@
 </select>
 </div>
 
+<div class = "formandContentWrappingDiv">
 <form>
     <div>
-      <input type="text" class="input" [(ngModel)]="filter"[ngModelOptions]="{standalone: true}"> 
-    </div> 
-    <br>
-    
-   <button type="submit" class="Confirm"(click) = 'advancedFilter(filter)'>Search</button>
+      <input type="text" id ="inp" class="input" [(ngModel)]="filter"[ngModelOptions]="{standalone: true}"> 
+    </div>     
+   <button type="submit" class="formSubmit"(click) = 'advancedFilter(filter)'>Search</button>
+   <button type="button" class="Clear"(click) ="filter = '';clear()  ">Clear</button>
+
 </form>
+<br>
+<br>
 
 <div style="text-align:center" *ngFor="let m of domainService.memes">
   <div class="imageDisplayingDiv" >
@@ -20,4 +23,7 @@
      <br>
     <img [src]=m.url>
     <br>
+    <hr>
+</div>
+</div>
 </div>
