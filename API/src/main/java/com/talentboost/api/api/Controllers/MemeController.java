@@ -25,9 +25,7 @@ public class MemeController {
 
     @GetMapping("/memes/{page}")
         public List<Meme> returnPagedMemes(@PathVariable int page){
-        System.out.println("GotPagedMemes");
         return memeService.getPagedMemes(page);
-
     }
 
     @GetMapping("/page/{contentPerPage}")
@@ -49,12 +47,12 @@ public class MemeController {
     }
 
     @PutMapping("/update/{id}")
-    public void update(@RequestParam("file") MultipartFile file,@PathVariable int id) throws IOException {
+    public void update(@RequestParam("file") MultipartFile file,@PathVariable int id) throws NoSuchFieldException, IOException {
     memeService.updateMeme(file,id);
 
     }
     @PutMapping("/updateTitle/{id}")
-    public void update(@RequestBody String newTitle,  @PathVariable int id) {
+    public void update(@RequestBody String newTitle,  @PathVariable int id) throws NoSuchFieldException {
     memeService.updateMemeTitle(newTitle,id);
 
     }

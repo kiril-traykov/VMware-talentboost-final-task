@@ -1,10 +1,10 @@
 package com.talentboost.api.api.ServicesImpl;
 
 
+import com.talentboost.api.api.Application;
 import com.talentboost.api.api.Models.Domain;
 import com.talentboost.api.api.Models.Meme;
 import com.talentboost.api.api.Services.DomainServiceInterface;
-import org.hibernate.query.criteria.internal.expression.function.AggregationFunction;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -29,46 +29,59 @@ public class DomainService implements DomainServiceInterface {
     @Override
     @PostConstruct
     public void register(){
+
         String serverName = "Normie Memes";
-        String myAddress = "http://192.168.1.5:8080";
-        Domain myDomain = new Domain(serverName, myAddress);
-        try {
+        Domain myDomain = new Domain(serverName, Application.myServerAddress);
+
+        try
+        {
             index = rest.postForObject
-                    (url + "/register?name=" + serverName + "&address=" + myAddress, myDomain, Integer.class);
+                    (url + "/register?name=" + serverName + "&address=" + Application.myServerAddress, myDomain, Integer.class);
         }catch (Exception e){
             System.out.println("Could not Register");
             e.printStackTrace();
         }
-    }
-    @Override
 
+    }
+
+    @Override
    public Domain[] getDomains(){
-                domains = rest.getForObject(url,Domain[].class);
-                return domains;
+        domains = rest.getForObject(url,Domain[].class);
+        return domains;
     }
 
     @Override
-    public Meme[] getMemes(String domain){
+    public Meme[] getMemes(String domain) {
         String address = "";
-        for(Domain currentDomain : domains){
-            if(currentDomain.getName().equals(domain)){
+
+        for(Domain currentDomain : domains)
+        {
+            if(currentDomain.getName().equals(domain))
+            {
                 address = currentDomain.getAddress();
                 break;
             }
         }
-         memes = rest.getForObject(address + "/memes",Meme[].class);
+
+        memes = rest.getForObject(address + "/memes",Meme[].class);
+
        return memes;
     }
 
     @Override
     public List<Meme> getFilteredMemes(String filter) {
           List<Meme> filteredMemes = new ArrayList<>();
-          for(Meme meme : memes){
-              if(meme.getTitle().toLowerCase().contains(filter.toLowerCase())){
+
+          for(Meme meme : memes)
+          {
+              if(meme.getTitle().toLowerCase().contains(filter.toLowerCase()))
+              {
                   filteredMemes.add(meme);
               }
           }
-          if(filteredMemes.size() == 0){
+
+          if(filteredMemes.size() == 0)
+          {
               filteredMemes.add(findClosestMeme(filter));
           }
 
@@ -78,12 +91,15 @@ public class DomainService implements DomainServiceInterface {
     private Meme findClosestMeme(String filter) {
 
         int minLevenStheinDistance = 123123123; // just need a very big number
-        int currentDistance;
+        int currentDifference;
         Meme tmp = null;
-        for (Meme meme : memes) {
-            currentDistance = levenStheinAlgorithm(meme.getTitle(), filter);
-            if (currentDistance < minLevenStheinDistance) {
-                minLevenStheinDistance = currentDistance;
+
+        for (Meme meme : memes)
+        {
+            currentDifference = levenStheinAlgorithm(meme.getTitle(), filter);
+            if (currentDifference < minLevenStheinDistance)
+            {
+                minLevenStheinDistance = currentDifference;
                 tmp = meme;
             }
         }
@@ -93,7 +109,6 @@ public class DomainService implements DomainServiceInterface {
 
     private int levenStheinAlgorithm(String title,String filter) {
         int[][] dp = new int[title.length() + 1][filter.length() + 1];
-
 
         for(int i = 0; i <= filter.length();i++){
             dp[0][i] = i;
@@ -115,10 +130,9 @@ public class DomainService implements DomainServiceInterface {
         return 1;
     }
 
-
     @PreDestroy
     @Override
-    public void onDestroy() throws Exception {
+    public void onDestroy() {
         rest.delete(url + "/deregister/" + index);
     }
 

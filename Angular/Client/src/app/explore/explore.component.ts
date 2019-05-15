@@ -8,20 +8,23 @@ import { Domain } from '../Models/Domain';
 })
 export class ExploreComponent implements OnInit {
   currentDomain : String;
-  constructor(private domainService : DomainService) { }
+  filter : String;
+  constructor(public domainService : DomainService) { }
 
   ngOnInit() {
     this.domainService.getDomains();
   }
 
   advancedFilter(filter : String){
-    
+    if(filter !== '')
+    {
     this.domainService.advancedFilter(filter);
-  
+  }
   }
 
   clear(){
-    this.domainService.extractMemes(this.currentDomain);
+    this.filter = '';
+    this.domainService.getMemes(this.currentDomain);
   }
 
   onChange(domainName){

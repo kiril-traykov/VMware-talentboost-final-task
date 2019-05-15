@@ -8,40 +8,40 @@ import { Meme } from './Models/Meme';
 export class DomainService {
 domains : Domain[] = [];
 memes : Meme[] = [];
-address : String = "http://localhost:8080";
-  constructor(private http : HttpClient) { }
+  
+constructor(private http : HttpClient) { }
 
 
   getDomains(){
-    this.http.get(this.address +  "/domains").subscribe(
+    this.memes = [];
+    this.http.get("/domains").subscribe(
       data => this.extractDomains(data));
     }
 
-    extractDomains(data){
+    extractDomains(domains){
       this.domains = [];
-      for(let domain of data){
+      for(let domain of domains){
         this.domains.push(domain);
       }
     }
 
   getMemes(domain){
-    this.http.get(this.address +  '/OtherMemes/' + domain).subscribe(
+    this.http.get('/OtherMemes/' + domain).subscribe(
     data => this.extractMemes(data)
   );
   }
 
-  extractMemes(data){
+  extractMemes(memes){
     this.memes = [];
-    for(let meme of data){
+    for(let meme of memes){
       this.memes.push(meme);
     }
   }
 
   advancedFilter(filter : String){
-    this.http.get(this.address + '/filter/' + filter).subscribe(
+    this.http.get('/filter/' + filter).subscribe(
       data => this.extractMemes(data));
     }
-
 
   }
 

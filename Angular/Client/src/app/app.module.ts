@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AddComponent } from './add/add.component';
 import { ExploreComponent } from './explore/explore.component';
+import {LocationStrategy, Location, HashLocationStrategy } from '@angular/common'; 
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import { ExploreComponent } from './explore/explore.component';
     FormsModule
 
   ],
-  providers: [],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

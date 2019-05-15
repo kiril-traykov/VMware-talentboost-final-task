@@ -10,17 +10,18 @@ import { TouchSequence } from 'selenium-webdriver';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-private currentPage : number = 1;
-private totalPages;
-private contentPerPage : number = 4;
-  constructor(private memeService : MemeService,private http : HttpClient,
+ currentPage : number = 1;
+ totalPages;
+ contentPerPage : number = 4;
+ filterstr;
+
+  constructor(public memeService : MemeService,private http : HttpClient,
     private router : Router) { }
 
   ngOnInit() {
     this.setUpPagination();
     this.getMemes();
   }
-
 
   getMemes(){
     setTimeout(() => this.memeService.getMemes(this.currentPage),500);
@@ -29,7 +30,6 @@ private contentPerPage : number = 4;
   onDelete(i){
     this.memeService.delete(i);
     window.location.reload();
-
   }
 
   onEdit(i,index){
@@ -40,43 +40,40 @@ private contentPerPage : number = 4;
   setUpPagination()
   {
     this.currentPage = 1;
-   this.http.get('http://localhost:8080/page/' + this.contentPerPage).subscribe(
+   this.http.get('/page/' + this.contentPerPage).subscribe(
      data => this.totalPages = data
    )
   }
 
   filter(filter : String){
-  if(filter === ''){
-    setTimeout (() => this.http.post('http://localhost:8080/filter',"RemoveFilterFromApi").subscribe() , 300);
-    setTimeout (() => this.setUpPagination(),500);
+  if(filter === '')
+  {
+    setTimeout (() => this.http.post('/filter',"RemoveFilterFromApi").subscribe(), 300);
+    setTimeout (() => this.setUpPagination(), 300);
     this.getMemes();
-
   }
-   else{ 
-    setTimeout (() => this.http.post('http://localhost:8080/filter',filter).subscribe() , 300);
-  setTimeout (() => this.setUpPagination(),500);
-  this.getMemes();
+   else
+   { 
+    setTimeout (() => this.http.post('/filter',filter).subscribe(), 300);
+    setTimeout (() => this.setUpPagination(), 300);
+    this.getMemes();
   }
 }
 
   setPageContent(event){
     this.contentPerPage = event.target.value;
     this.currentPage = 1;
-    setTimeout (() => this.setUpPagination(),500);
-        this.getMemes();
+    setTimeout (() => this.setUpPagination(), 300);
+    this.getMemes();
   }
   
   next(){
-    console.log("next");
-
     this.currentPage++;
     setTimeout(() => this.getMemes(),300);
-
   }
+
   previous(){
-    console.log(this.totalPages);
     this.currentPage--;
-    
     setTimeout(() => this.getMemes(),300);
   }
 

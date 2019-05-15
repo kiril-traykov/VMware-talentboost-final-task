@@ -9,13 +9,15 @@ import {HttpClient} from '@angular/common/http';
   styleUrls: ['./add.component.css']
 })
 export class AddComponent implements OnInit {
- private selectedImage : File = null;
- private meme : Meme = new Meme('','',0);
- private edit : boolean = false;
-  constructor(private router:Router,private memeService : MemeService,private http:HttpClient) { }
+  selectedImage : File = null;
+  meme : Meme = new Meme('','',0);
+  edit : boolean = false;
+  constructor(private router:Router, private memeService : MemeService, private http:HttpClient)
+   { }
 
   ngOnInit() {
-    if(!(this.memeService.index === -1)){
+    if(!(this.memeService.index === -1))
+    {
       this.meme = this.memeService.memes[this.memeService.index];
       this.edit = true;
     }
@@ -28,27 +30,26 @@ export class AddComponent implements OnInit {
     fd.append('file', this.selectedImage,this.meme.title);
     console.log(this.meme.title);
     this.memeService.add(fd);
-    
-
-}
-   else{
-     if(this.selectedImage === null){
-      this.memeService.updateTitle(this.meme.title);
-     
     }
+
+   else
+   {
+     if(this.selectedImage === null)
+     {
+      this.memeService.updateTitle(this.meme.title);
+     }
      
-     else{
-       console.log(this.selectedImage);
-       fd.append('file',this.selectedImage,this.meme.title);
+     else
+     {
+         fd.append('file',this.selectedImage,this.meme.title);
          this.memeService.updateMeme(fd);
      }
    }
    setTimeout(() => 
-{this.router.navigate(['/Home']);},500);
+  { this.router.navigate(['/Home']);}, 500);
   }
 
   handleImages(event){
-    console.log("selectedImage");
     this.selectedImage = event.target.files[0];
       }
 
@@ -58,7 +59,6 @@ export class AddComponent implements OnInit {
       }
 
       ngOnDestroy(){
-        console.log("destroy");
         this.memeService.finishEditMeme();
         this.edit = false;
       }

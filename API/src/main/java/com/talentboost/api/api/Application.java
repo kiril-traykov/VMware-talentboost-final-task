@@ -1,5 +1,6 @@
 package com.talentboost.api.api;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -15,11 +16,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @CrossOrigin
 public class Application {
 
+    @Value("${resources.address}")
+    String resourceFolderUrl;
+    public  static final  String myServerAddress = "http://192.168.1.5:6789";
+
     public static void main(String[] args) {
+
         SpringApplication.run(Application.class, args);
     }
-
-
 
     @Bean
     WebMvcConfigurer weBMvcConfigurer(){
@@ -27,7 +31,7 @@ public class Application {
             @Override
             public void addResourceHandlers(ResourceHandlerRegistry registry) {
                 registry.addResourceHandler("/images/**")
-                        .addResourceLocations("file:///C:/MemeWorld/Images/");
+                        .addResourceLocations(resourceFolderUrl);
 
             }
         };
@@ -37,10 +41,8 @@ public class Application {
     public class SpringWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http.
-                    csrf().disable();
-
+            http.csrf().disable();
         }
-
     }
+
 }
