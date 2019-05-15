@@ -75,16 +75,8 @@ public class MemeService implements MemeServiceInterface {
     public void addMeme(MultipartFile file) {
         String title = file.getOriginalFilename();
         String image = "/images/" + title + ".png";
-        Path path = Paths.get(imagesPath + title + ".png");
 
-        try
-        {
-            byte[] arr = file.getBytes();
-            Files.write(path, arr);
-        } catch (IOException e) {
-            System.out.println("Upload failed");
-            e.printStackTrace();
-        }
+        imageWriter(file);
 
         repository.save(new Meme(title, image));
         removeFilter();
@@ -100,17 +92,9 @@ public class MemeService implements MemeServiceInterface {
     public void updateMeme(MultipartFile file, int id) throws NoSuchFieldException {
         String newTitle = file.getOriginalFilename();
         String image =  "/images/" + newTitle + ".png";
-        Path path = Paths.get(imagesPath + newTitle + ".png");
         Meme meme;
 
-        try
-        {
-            byte[] arr = file.getBytes();
-            Files.write(path, arr);
-        } catch (IOException e) {
-            System.out.println("Image uploading failed");
-            e.printStackTrace();
-        }
+        imageWriter(file);
 
         meme = repository.findById(id).orElse(null);
         if(meme != null)
@@ -149,6 +133,20 @@ public class MemeService implements MemeServiceInterface {
      {
      this.filter = filter;
      }
+    }
+
+    private void imageWriter(MultipartFile file){
+
+        Path path = Paths.get(imagesPath + file.getOriginalFilename() + ".png");
+        try
+        {
+            byte[] arr = file.getBytes();
+            Files.write(path, arr);
+        } catch (IOException e) {
+            System.out.println("Upload failed");
+            e.printStackTrace();
+        }
+
     }
 
     private List<Meme> getPagedMemesFilter(int page) {
