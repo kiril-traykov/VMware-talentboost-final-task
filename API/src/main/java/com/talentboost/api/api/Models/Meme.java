@@ -7,7 +7,8 @@ import javax.persistence.*;
 public class Meme {
     @Column(name="title")
     private String title;
-    private String url;
+    @Column(name="image")
+    private String image;
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name="ID")
@@ -32,17 +33,17 @@ public class Meme {
         this.title = title;
     }
 
-    public String getUrl() {
-        return url;
+    public String getImage() {
+        return image;
     }
 
-    public void setUrl(String address) {
-        this.url = address;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public Meme(String title, String url) {
+    public Meme(String title, String image) {
         this.title = title;
-        this.url = url;
+        this.image = image;
     }
 
 

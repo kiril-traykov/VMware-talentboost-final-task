@@ -69,7 +69,7 @@ public class MemeService implements MemeServiceInterface {
     @Override
     public void addMeme(MultipartFile file) {
         String title = file.getOriginalFilename();
-        String url = "/images/" + title + ".png";
+        String image = "/images/" + title + ".png";
         Path path = Paths.get(imagesPath + title + ".png");
 
         try
@@ -81,7 +81,7 @@ public class MemeService implements MemeServiceInterface {
             e.printStackTrace();
         }
 
-        repository.save(new Meme(title, url));
+        repository.save(new Meme(title, image));
         removeFilter();
     }
 
@@ -94,7 +94,7 @@ public class MemeService implements MemeServiceInterface {
     @Override
     public void updateMeme(MultipartFile file, int id) throws NoSuchFieldException {
         String newTitle = file.getOriginalFilename();
-        String url =  "/images/" + newTitle + ".png";
+        String image =  "/images/" + newTitle + ".png";
         Path path = Paths.get(imagesPath + newTitle + ".png");
         Meme meme;
 
@@ -111,7 +111,7 @@ public class MemeService implements MemeServiceInterface {
         if(meme != null)
         {
             meme.setTitle(newTitle);
-            meme.setUrl(url);
+            meme.setImage(image);
             repository.save(meme);
         }
         else{
@@ -186,7 +186,7 @@ public class MemeService implements MemeServiceInterface {
     private List<Meme> mapAddressToImageUrl(List <Meme> memes){
 
         for(Meme m : memes){
-            m.setUrl(Application.myServerAddress + m.getUrl());
+            m.setImage(Application.myServerAddress + m.getImage());
         }
         return memes;
     }
