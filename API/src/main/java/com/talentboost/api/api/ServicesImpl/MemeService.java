@@ -34,6 +34,7 @@ public class MemeService implements MemeServiceInterface {
     @Override
     public List<Meme> getPagedMemes(int page) {
         List<Meme> memes;
+        List<Meme> pagedMemes = new ArrayList<>();
         if(filter.equals("")){
             memes = getPagedMemesNoFilter(page);
         }
@@ -41,7 +42,11 @@ public class MemeService implements MemeServiceInterface {
             memes =  getPagedMemesFilter(page);
         }
 
-        return mapAddressToImageUrl(memes);
+        for(int i = (page - 1) * contentPerPage; i < page * contentPerPage && i < memes.size();i++) {
+            pagedMemes.add(memes.get(i));
+        }
+
+        return mapAddressToImageUrl(pagedMemes);
     }
 
     @Override
@@ -148,7 +153,7 @@ public class MemeService implements MemeServiceInterface {
 
     private List<Meme> getPagedMemesFilter(int page) {
         List<Meme> allMemes = repository.findAll();
-        List<Meme> selectedMemes = new ArrayList<>();
+       // List<Meme> selectedMemes = new ArrayList<>();
         List<Meme> allFilteredMemes = new ArrayList<>();
         allMemes.sort(new SortbyId());
 
@@ -160,22 +165,23 @@ public class MemeService implements MemeServiceInterface {
 
         totalPagesFilter = (int)Math.ceil((float)allFilteredMemes.size()/(float)contentPerPage);
 
-        for(int i = (page - 1) * contentPerPage; i < page * contentPerPage && i < allFilteredMemes.size();i++) {
-            selectedMemes.add(allFilteredMemes.get(i));
-        }
+//        for(int i = (page - 1) * contentPerPage; i < page * contentPerPage && i < allFilteredMemes.size();i++) {
+//            selectedMemes.add(allFilteredMemes.get(i));
+//        }
 
-        return selectedMemes;
+        return allFilteredMemes;
     }
 
     private List<Meme> getPagedMemesNoFilter(int page) {
         List<Meme> allMemes = repository.findAll();
-        List<Meme> selectedMemes = new ArrayList<>();
+       // List<Meme> selectedMemes = new ArrayList<>();
         allMemes.sort(new SortbyId());
 
-        for(int i = (page - 1) * contentPerPage; i < page * contentPerPage && i < allMemes.size();i++) {
-            selectedMemes.add(allMemes.get(i));
-        }
-        return selectedMemes;
+//        for(int i = (page - 1) * contentPerPage; i < page * contentPerPage && i < allMemes.size();i++) {
+//            selectedMemes.add(allMemes.get(i));
+//        }
+
+        return allMemes;
     }
 
     private void removeFilter()
