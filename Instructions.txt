@@ -1,0 +1,70 @@
+VMware TalentBoost 2019 Final task. CRUD application Spring + Angular + MySQL.
+
+Configure:
+DataBase connection:
+This application uses MySQL DataBase and Spring's JPA to handle the connection.
+application.properties file must be configured so JPA knows the url,username and password
+
+sample configuration:
+
+spring.datasource.url=jdbc:mysql://localhost:3306/Memes
+spring.datasource.username=root
+spring.datasource.password=1234
+
+spring.jpa.hibernate.ddl-auto=update
+
+/Memes after the url is the DataBase, which must be created by whoever runs the application.
+JPA's hibernate.ddl should be on either 'create' or 'update' and it will configure the tables and columns itself.
+
+Next configuration in application.properties is the host on which the app runs.
+By default it is server.port=6789(overriding spring's OOTB 8080).
+Configuration of this parameter is not mandatory as 6789 isn't default port for most stuff.
+Angular is bundled with Springboot and should start on this port aswell.
+
+Next configuration is the path to the public exposed resources.
+resources.address=file:///C:/MemeWorld/Images/
+this parameter is used by 'resourceFolderUrl' withing Application.class to point to the directory from which the images 
+are accessable to the web so that the explore tab may work.
+The whole application is within "MemeWorld" folder and "Images" folder is right inside that,along with the API and
+the code for Angular. Changing the resource directory is not recommended as it will require changes on some other
+places aswell, so just make sure the path points to "somepath//MemeWorld/Images/" and the "file:///"
+is mandatory at least for windows.
+
+Final configuration is the public static final String 'myServerAddress' variable within the Application class.
+this should be the IP and the port you are running the application from. By default port is 6789.
+This variable is then mapped to the Meme's Image's urls upon sending them to Angular or external app
+or used when register method in domain service is called.
+This is the reason why there must be exposed folder with resources.
+
+    public  static final  String myServerAddress = "http://192.168.1.5:6789";
+
+Recap:
+application.properties:
+1.
+DataBase configuration
+spring.jpa.hibernate.ddl-auto=update
+spring.datasource.url=jdbc:mysql://localhost:3306/Memes
+spring.datasource.username=root
+spring.datasource.password=1234
+
+where the DataBase must be already created. JPA should take care of the tables and columns.
+
+2. Server port if changes are required
+server.port=6789
+
+3.resources.address 
+must point file"///something/MemeWorld/Images/
+
+resources.address=file:///C:/MemeWorld/Images/
+
+and Application.class:
+myServerAddress must point to the IP Spring is runned with along with "http://" and the port.
+
+public  static final  String myServerAddress = "http://192.168.1.5:6789";
+
+______________________________________________________________________________
+
+Angular is bundled with Spring and it's files are placed under resources/static folder in Spring and will
+start along with the Spring Application on the same port.
+
+
